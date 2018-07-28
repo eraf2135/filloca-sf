@@ -41,7 +41,6 @@
 (reg-event-db
   :selected-film
   (fn [db [_ title]]
-    (js/console.log title)
     (assoc db :selected-film title)))
 
 ;;subscriptions
@@ -74,8 +73,12 @@
           distinct-films (distinct (map :title (:films db)))]
       (filterv #(s/includes? (s/lower-case %) trimmed-val) distinct-films))))
 
-
 (reg-sub
   :locations-for-film
   (fn [db _]
     (filter #(= (:selected-film db) (:title %)) (:films db))))
+
+(reg-sub
+  :selected-film
+  (fn [db _]
+    (:selected-film db)))

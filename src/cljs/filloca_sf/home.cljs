@@ -23,7 +23,7 @@
                                                  (rf/dispatch [:selected-film (.-suggestion o)]))
                   :getSuggestionValue          get-suggestion-value
                   :renderSuggestion            render-suggestion
-                  :inputProps                  {:placeholder "Movie name"
+                  :inputProps                  {:placeholder "Movie (e.g. Age of Adaline)"
                                                 :value       (or @(rf/subscribe [:film-search-val]) "")
                                                 :onChange    (fn [evt new-val method]
                                                                (rf/dispatch [:set-film-search-val (.-newValue new-val)]))}}]))
@@ -32,11 +32,32 @@
   (if @(rf/subscribe [:loading-films?])
     [:div "loading..."]
     [:div
-     [auto-suggest "films"]
-     [:div (map #(vector :p (str %)) @(rf/subscribe [:locations-for-film]))]]))
+     [auto-suggest "films"]]))
+
+(defn- mapbox-map []
+  (r/create-class
+    {:component-did-mount (fn []
+                            (let [m (js/mapboxgl.Map. (clj->js {:container "map"
+                                                                :style     "mapbox://styles/mapbox/streets-v10"
+                                                                :center    [-122 38]
+                                                                :zoom      6
+                                                                }))]
+
+                              (.addControl m (mapboxgl.NavigationControl.))))
+     :reagent-render      (fn []
+                            [:div.row
+                             [:div.col-md-3
+                              [films-autocomplete]
+                              [:br]
+                              [:h5 @(rf/subscribe [:selected-film])]
+                              [:br]
+                              [:h6 "Filming Locations:"]
+                              [:div
+                               (map #(vector :p.filming-location-label (:locations %)) @(rf/subscribe [:locations-for-film]))]]
+                             [:div#map {:class "map col-md-9"}]])}))
 
 (defn page []
   [:div.container
    [:p "Welcome!"]
    [:p "Search for movies filmed in the San Franciso Area and will show you the filming locations!"]
-   [films-autocomplete]])
+   [mapbox-map]])

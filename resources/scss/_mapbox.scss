@@ -1,0 +1,30 @@
+body {
+  background: #404040;
+  color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sidebar {
+  width: 33.3333%;
+}
+
+.map {
+  border-left: 1px solid #fff;
+  height: 500px;
+  top: 0;
+  bottom: 0;
+}
+
+.pad2 {
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.filming-location-label:hover {
+  font-weight: bolder;
+  cursor: pointer;
+}
