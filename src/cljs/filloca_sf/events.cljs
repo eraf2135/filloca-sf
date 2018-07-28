@@ -33,7 +33,7 @@
   (fn [{:keys [db]} _]
     {:db         (assoc db :loading-films? true)
      :http-xhrio {:method          :get
-                  :uri             "/api/films"
+                  :uri             "/api/filming-locations"
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success      [:set-films]
                   :on-failure      [:film-load-failed]}}))

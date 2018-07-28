@@ -39,10 +39,26 @@
   {:home  #'home/page
    :about #'about-page})
 
+(defn mapbox-map []
+  (r/create-class
+    {:component-did-mount (fn []
+                            (let [m (js/mapboxgl.Map. (clj->js {:container "map"
+                                                                :style "mapbox://styles/mapbox/streets-v10"
+                                                                :center [-122 38]
+                                                                :zoom 6
+                                                                }))]
+
+                              (.addControl m (mapboxgl.NavigationControl.))))
+     :reagent-render      (fn []
+                            [:div#map {:style {:width  "500px"
+                                               :height "400px"}}])}))
+
 (defn page []
   [:div
    [navbar]
-   [(pages @(rf/subscribe [:page]))]])
+   [(pages @(rf/subscribe [:page]))]
+   [mapbox-map]
+   ])
 
 ;; -------------------------
 ;; Routes

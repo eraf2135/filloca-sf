@@ -14,11 +14,12 @@
   (context "/api" []
     :tags ["AJAX Endpoints"]
 
-    (GET "/films" []
+    (GET "/filming-locations" []
       :query-params [{title :- String ""}
                      {limit :- Long nil}
                      {offset :- Long 0}]
       :summary      "Films by name"
-      ;(defonce a (dsf/get-films dsf/data-sf limit offset {:title title}))
-      ;(ok a)
-      (ok (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title})))))
+      (let [filming-locations (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title})]
+        (defonce b filming-locations)
+        (ok b)
+        #_(ok filming-locations)))))

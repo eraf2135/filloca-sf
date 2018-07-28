@@ -58,7 +58,7 @@
                 (map->DataSFImpl {:api-key (env :api-key)}))
 
 (comment
-  (let [dsf (map->DataSFImpl {})]                           ;don't actually need an API key if willing to use shared pool...
+  (let [dsf (map->DataSFImpl {})] ;don't actually need an API key if willing to use shared pool...
     (count (get-films dsf 100 0 {
                                  ;:actor "John"
                                  ;:writer "Sam"

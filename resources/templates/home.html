@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Welcome to filloca-sf</title>
-  </head>
-  <body>
-    
-    <div id="app">
-      <div>loading...</div>
-    </div>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet'/>
+    <title>Welcome to filloca-sf</title>
+</head>
+<body>
 
-    <!-- scripts and styles -->
-    {% style "/assets/bootstrap/css/bootstrap.min.css" %}
-    {% style "/assets/font-awesome/css/all.css" %}
-    {% style "/css/screen.css" %}
+<div id="app">
+    <div>loading...</div>
+</div>
 
-    {% script "/assets/jquery/jquery.min.js" %}
-    {% script "/assets/font-awesome/js/all.js" %}
-    {% script "/assets/tether/dist/js/tether.min.js" %}
-    {% script "/assets/bootstrap/js/bootstrap.min.js" %}
+<!--<div id='map' style='width: 400px; height: 300px;'></div>-->
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZXJhZmZvdWwiLCJhIjoiY2prNWMzbG9sMG5oZDN3cWxtZnh6bTN4eSJ9.MhmGRMxKWETyoyVWjWOyMA';
+</script>
 
-    <script type="text/javascript">
-        var csrfToken = "{{csrf-token}}";
-    </script>
-    {% script "/js/app.js" %}
-  </body>
+<!-- scripts and styles -->
+{% style "/assets/bootstrap/css/bootstrap.min.css" %}
+{% style "/assets/font-awesome/css/all.css" %}
+{% style "/css/screen.css" %}
+
+{% script "/assets/jquery/jquery.min.js" %}
+{% script "/assets/font-awesome/js/all.js" %}
+{% script "/assets/tether/dist/js/tether.min.js" %}
+{% script "/assets/bootstrap/js/bootstrap.min.js" %}
+
+<script type="text/javascript">
+    var csrfToken = "{{csrf-token}}";
+</script>
+{% script "/js/app.js" %}
+</body>
 </html>
