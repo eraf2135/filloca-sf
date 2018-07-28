@@ -29,15 +29,11 @@
                                                                (rf/dispatch [:set-film-search-val (.-newValue new-val)]))}}]))
 
 (defn- films-autocomplete []
-  (r/create-class
-    {:component-did-mount (fn []
-                            (rf/dispatch [:get-films]))
-     :reagent-render      (fn []
-                            (if @(rf/subscribe [:loading-films?])
-                              [:div "loading..."]
-                              [:div
-                               [auto-suggest "films"]
-                               [:div (map #(vector :p (str %)) @(rf/subscribe [:locations-for-film]))]]))}))
+  (if @(rf/subscribe [:loading-films?])
+    [:div "loading..."]
+    [:div
+     [auto-suggest "films"]
+     [:div (map #(vector :p (str %)) @(rf/subscribe [:locations-for-film]))]]))
 
 (defn page []
   [:div.container

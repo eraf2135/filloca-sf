@@ -76,4 +76,5 @@
   (rf/dispatch-sync [:navigate :home])
   (load-interceptors!)
   (hook-browser-navigation!)
-  (mount-components))
+  (mount-components)
+  (rf/dispatch [:get-films]))
