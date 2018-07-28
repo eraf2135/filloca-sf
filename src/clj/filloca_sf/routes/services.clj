@@ -11,7 +11,7 @@
                            :description "Sample Services"}}}}
   
   (context "/api" []
-    :tags ["thingie"]
+    :tags ["Endpoints"]
     
     (GET "/plus" []
       :return       Long

@@ -1,7 +1,6 @@
 # filloca-sf
 
-generated using Luminus version "2.9.12.78"
-lein new luminus filloca-sf +jetty +re-frame +swagger +sassc +kibit
+Generated using Luminus version "2.9.12.78" `lein new luminus filloca-sf +jetty +re-frame +swagger +sassc +kibit`
 
 ## Prerequisites
 
@@ -14,7 +13,7 @@ From command line:
 
     lein figwheel app
  
-Or from IDE, after starting a local REPL:
+Or from the REPL:
 
     (start-fw)
 
@@ -23,15 +22,16 @@ To compile and watch for changes
     
     lein auto sassc once
 
-
 ## Running
 To start a web server for the application from the command line, run:
 
     lein run 
 
-To start a web server for the application from your IDE, start a local REPL then run:
+Or from the REPL:
 
     (start)
+    
+Now you can access the site at `http://localhost:3000`
 
 ## Tests
 Clojure:
@@ -45,7 +45,16 @@ Clojurescript:
 ## Swagger
 
     http://localhost:3000/swagger-ui
-    
-## License
 
-Copyright © 2018 FIXME
+## Debugging
+Re-frame 10x is installed so you can inspect the app-state and lifecycle events.
+From any of the re-frame/react pages press CTRL+H to open the debugger.
+
+## Prod Build
+
+    lein uberjar  
+    
+Can run with:
+
+    java -jar ./target/uberjar/filloca-sf.jar
+    
