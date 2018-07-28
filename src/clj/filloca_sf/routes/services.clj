@@ -12,9 +12,13 @@
                            :description "Services"}}}}
   
   (context "/api" []
-    :tags ["Endpoints"]
+    :tags ["AJAX Endpoints"]
 
     (GET "/films" []
-      :query-params [{title :- String ""}]
-      :summary      "Films by name: limits 20"
-      (ok (dsf/get-films dsf/data-sf 20 0 {:title title})))))
+      :query-params [{title :- String ""}
+                     {limit :- Integer 20}
+                     {offset :- Integer 0}]
+      :summary      "Films by name"
+      ;(def a (dsf/get-films dsf/data-sf limit offset {:title title}))
+      ;(ok a)
+      (ok (dsf/get-films dsf/data-sf Integer/MAX_VALUE offset {:title title})))))

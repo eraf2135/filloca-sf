@@ -7,9 +7,6 @@
             [clojure.set :as cs]
             [clojure.data.json :as json]))
 
-;todo: think about loading the data on server start and calculating all the lat and long so the UI is faster
-;only 1,622 records and not much data in each...don't really need to paginate...
-
 ;todo: handle case insensitivity
 
 (defn- actor-soql [a]
@@ -25,6 +22,7 @@
          (str "= " v)
          (->like-clause v))))
 
+;this is not used anymore because it's overkill. The data set is so small better to just load it all into browser so autocomplete and UX interations are faster.
 (defn- ->where-clause [{:keys [actor] :as params}]
   (let [non-actor-where-clause (string/join " and "
                                             (map #(apply to-soql %)

@@ -36,7 +36,9 @@
                  [clj-http "3.9.0"]
                  [org.tobereplaced/lettercase "1.0.0"]
                  ;[prismatic/schema "1.1.9"]
-                 [org.clojure/data.json "0.2.6"]]
+                 [org.clojure/data.json "0.2.6"]
+                 [day8.re-frame/http-fx "0.1.6"]
+                 [cljsjs/react-autosuggest "9.3.4-0"]]
 
   :min-lein-version "2.0.0"
   
