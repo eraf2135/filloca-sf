@@ -13,3 +13,6 @@ profiles.clj
 .nrepl-port
 /log
 .idea
+.rebel_readline_history
+figwheel_server.log
+filloca-sf.iml
