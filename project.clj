@@ -32,7 +32,11 @@
                  [ring/ring-core "1.6.3"]
                  [ring/ring-defaults "0.3.2"]
                  [secretary "1.2.3"]
-                 [selmer "1.11.8"]]
+                 [selmer "1.11.8"]
+                 [clj-http "3.9.0"]
+                 [org.tobereplaced/lettercase "1.0.0"]
+                 ;[prismatic/schema "1.1.9"]
+                 [org.clojure/data.json "0.2.6"]]
 
   :min-lein-version "2.0.0"
   

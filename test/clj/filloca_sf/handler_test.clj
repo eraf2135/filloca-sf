@@ -1,4 +1,4 @@
-(ns filloca-sf.test.handler
+(ns filloca-sf.handler-test
   (:require [clojure.test :refer :all]
             [ring.mock.request :refer :all]
             [filloca-sf.handler :refer :all]
