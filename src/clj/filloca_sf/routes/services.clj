@@ -19,7 +19,7 @@
                      {limit :- Long nil}
                      {offset :- Long 0}]
       :summary      "Films by name"
-      (let [filming-locations (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title})]
-        (defonce b filming-locations)
-        (ok b)
-        #_(ok filming-locations)))))
+      (do
+        (defonce b (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title}))
+        (ok b))
+      #_(ok filming-locations))))

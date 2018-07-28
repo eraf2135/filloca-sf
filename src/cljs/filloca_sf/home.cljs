@@ -29,10 +29,7 @@
                                                                (rf/dispatch [:set-film-search-val (.-newValue new-val)]))}}]))
 
 (defn- films-autocomplete []
-  (if @(rf/subscribe [:loading-films?])
-    [:div "loading..."]
-    [:div
-     [auto-suggest "films"]]))
+  [auto-suggest "films"])
 
 (defn- mapbox-map []
   (r/create-class
@@ -49,15 +46,23 @@
                              [:div.col-md-3
                               [films-autocomplete]
                               [:br]
-                              [:h5 @(rf/subscribe [:selected-film])]
-                              [:br]
-                              [:h6 "Filming Locations:"]
-                              [:div
-                               (map #(vector :p.filming-location-label (:locations %)) @(rf/subscribe [:locations-for-film]))]]
+                              (when-let [f @(rf/subscribe [:selected-film])]
+                                [:div
+                                 [:h4 f]
+                                 [:br]
+                                 [:h5 "Filming Locations:"]
+                                 [:div
+                                  (map #(vector :p.filming-location-label (:locations %))
+                                       @(rf/subscribe [:locations-for-film]))]])]
                              [:div#map {:class "map col-md-9"}]])}))
 
 (defn page []
   [:div.container
-   [:p "Welcome!"]
-   [:p "Search for movies filmed in the San Franciso Area and will show you the filming locations!"]
-   [mapbox-map]])
+   [:h2 "Filloca SF"]
+   [:p "Welcome!" [:br]
+    "Search for movies filmed in the San Franciso Area and will show you the filming locations!"]
+   (if @(rf/subscribe [:loading-films?])
+     [:div
+      [:div.loader]
+      "Loading..."]
+     [mapbox-map])])

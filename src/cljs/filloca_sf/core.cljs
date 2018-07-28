@@ -10,38 +10,11 @@
             [filloca-sf.home :as home])
   (:import goog.History))
 
-(defn nav-link [uri title page]
-  [:li.nav-item
-   {:class (when (= page @(rf/subscribe [:page])) "active")}
-   [:a.nav-link {:href uri} title]])
-
-(defn navbar []
-  [:nav.navbar.navbar-dark.bg-secondary.navbar-expand-md
-   {:role "navigation"}
-   [:button.navbar-toggler.hidden-sm-up
-    {:type        "button"
-     :data-toggle "collapse"
-     :data-target "#collapsing-navbar"}
-    [:span.navbar-toggler-icon]]
-   [:a.navbar-brand {:href "#/"} "Filloca SF"]
-   [:div#collapsing-navbar.collapse.navbar-collapse
-    [:ul.nav.navbar-nav.mr-auto
-     [nav-link "#/" "Home" :home]
-     [nav-link "#/about" "About" :about]]]])
-
-(defn about-page []
-  [:div.container
-   [:div.row
-    [:div.col-md-12
-     [:img {:src "/img/warning_clojure.png"}]]]])
-
 (def pages
-  {:home  #'home/page
-   :about #'about-page})
+  {:home  #'home/page})
 
 (defn page []
   [:div
-   [navbar]
    [(pages @(rf/subscribe [:page]))]])
 
 ;; -------------------------
@@ -51,9 +24,6 @@
 
 (secretary/defroute "/" []
                     (rf/dispatch [:navigate :home]))
-
-(secretary/defroute "/about" []
-                    (rf/dispatch [:navigate :about]))
 
 ;; -------------------------
 ;; History
