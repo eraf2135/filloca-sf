@@ -16,3 +16,6 @@ profiles.clj
 .rebel_readline_history
 figwheel_server.log
 filloca-sf.iml
+doo-index.html
+out/
+

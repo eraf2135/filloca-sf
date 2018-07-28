@@ -33,6 +33,19 @@ To start a web server for the application from your IDE, start a local REPL then
 
     (start)
 
+## Tests
+Clojure:
+
+    lein test
+    
+Clojurescript:
+
+    lein with-profile test doo phantom
+
+## Swagger
+
+    http://localhost:3000/swagger-ui
+    
 ## License
 
 Copyright © 2018 FIXME
