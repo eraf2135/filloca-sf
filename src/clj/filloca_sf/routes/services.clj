@@ -16,9 +16,9 @@
 
     (GET "/films" []
       :query-params [{title :- String ""}
-                     {limit :- Integer 20}
-                     {offset :- Integer 0}]
+                     {limit :- Long nil}
+                     {offset :- Long 0}]
       :summary      "Films by name"
-      ;(def a (dsf/get-films dsf/data-sf limit offset {:title title}))
+      ;(defonce a (dsf/get-films dsf/data-sf limit offset {:title title}))
       ;(ok a)
-      (ok (dsf/get-films dsf/data-sf Integer/MAX_VALUE offset {:title title})))))
+      (ok (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title})))))
