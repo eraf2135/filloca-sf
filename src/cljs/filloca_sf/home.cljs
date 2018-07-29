@@ -28,6 +28,9 @@
                                               :onChange    (fn [evt new-val method]
                                                              (rf/dispatch [:set-film-search-val (.-newValue new-val)]))}}])
 
+(defn film-label [text]
+  [:p.filming-location-label {:key text} text])
+
 (defn- mapbox-map []
   (r/create-class
     {:component-did-mount (fn []
@@ -43,7 +46,7 @@
                                  [:br]
                                  [:h5 "Filming Locations:"]
                                  [:div
-                                  (map #(vector :p.filming-location-label (:locations %))
+                                  (map #(film-label (:locations %))
                                        @(rf/subscribe [:locations-for-film]))]])]
                              [:div#map {:class "map col-md-9"}]])}))
 
