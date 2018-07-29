@@ -85,7 +85,8 @@
                  :pretty-print false
                  :closure-warnings
                  {:externs-validation :off :non-standard-jsdoc :off}
-                 :externs ["react/externs/react.js"]}}}}
+                 :externs ["react/externs/react.js"
+                           "resources/externs/mapbox-extern.js"]}}}}
              
              
              :aot :all
