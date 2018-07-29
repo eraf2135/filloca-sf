@@ -1,11 +1,12 @@
-(ns filloca-sf.data-sf
+(ns filloca-sf.boundaries.data-sf
   (:require [mount.core :as mount]
             [filloca-sf.config :refer [env]]
             [clj-http.client :as client]
             [org.tobereplaced.lettercase :as l]
             [clojure.string :as string]
             [clojure.set :as cs]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json]
+            [clojure.tools.logging :as log]))
 
 ;todo: handle case insensitivity
 
@@ -35,6 +36,7 @@
   [api-key limit offset params]
   {:pre [(cs/subset? (set (keys params)) #{:actor :director :production-company :release-year :locations :title :writer})]}
   (when-let [w (->where-clause params)]
+    (log/info "Getting films for with limit: " limit " offset " offset "params" params)
     (-> (client/get "https://data.sfgov.org/resource/wwmu-gmzc.json"
                     {:query-params (merge {:$limit (or limit 100)}
                                           {:$offset (or offset 0)}

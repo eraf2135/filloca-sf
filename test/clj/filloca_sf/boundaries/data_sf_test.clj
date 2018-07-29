@@ -1,6 +1,6 @@
-(ns filloca-sf.data-sf-test
+(ns filloca-sf.boundaries.data-sf-test
   (:require [clojure.test :refer :all]
-            [filloca-sf.data-sf :as dsf]))
+            [filloca-sf.boundaries.data-sf :as dsf]))
 
 (deftest soql-param-conversion
   (testing "Converts keywords to strings with underscore and does a 'like' filter"

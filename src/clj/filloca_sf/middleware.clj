@@ -68,9 +68,16 @@
       ;; since they're not compatible with this middleware
       ((if (:websocket? request) handler wrapped) request))))
 
+(defn wrap-log [handler]
+  (fn [{:keys [query-params request-method uri] :as request}]
+    (when (clojure.string/includes? uri "api")
+      (log/info request-method uri query-params))
+    (handler request)))
+
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)
       wrap-webjars
+      wrap-log
       (wrap-defaults
         (-> site-defaults
             (assoc-in [:security :anti-forgery] false)

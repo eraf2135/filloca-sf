@@ -1,8 +1,21 @@
 (ns filloca-sf.routes.services
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
-            [schema.core :as s]
-            [filloca-sf.data-sf :as dsf]))
+            [filloca-sf.boundaries.data-sf :as dsf]
+            [filloca-sf.boundaries.mapbox :as mb]
+            [clojure.string :as st]
+            [clojure.tools.logging :as log]))
+
+(defn- safe-string [text]
+  (st/replace text #"/" " "))
+
+(defn- get-locations [text]
+  (mb/get-locations mb/mapbox (safe-string text)))
+
+(defn- get-geo-locations [descriptions]
+  (if (string? descriptions)
+    (get-locations descriptions)
+    (pmap get-locations descriptions)))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -16,10 +29,19 @@
 
     (GET "/filming-locations" []
       :query-params [{title :- String ""}
-                     {limit :- Long nil}
+                     {limit :- Long 10}
                      {offset :- Long 0}]
       :summary      "Films by name"
       (do
-        (defonce b (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title}))
-        (ok b))
-      #_(ok filming-locations))))
+        ;todo: delete once dev is finished
+        ;(defonce b (dsf/get-films dsf/data-sf (or limit Integer/MAX_VALUE) offset {:title title}))
+        ;(ok b)
+        (ok (dsf/get-films dsf/data-sf
+                           limit
+                           offset
+                           {:title title}))))
+
+    (GET "/geo-locations" []
+      :query-params [desc]
+      :summary      "Lat Long for a location description"
+      (ok (get-geo-locations desc)))))
