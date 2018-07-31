@@ -19,10 +19,16 @@
                          :layout {:icon-image         "cinema-15"
                                   :icon-allow-overlap true}})))
 
-(defn add-markers [film-name locations]
-  (let [all-features (mapcat :features locations)
-        geo-edn (assoc {:type "FeatureCollection"} :features all-features)]
+(defn fly-to [feature]
+  (.flyTo @sf-map (clj->js {:center (-> feature :geometry :coordinates)
+                            :zoom 15
+                            })))
+
+(defn add-markers [film-name features]
+  (let [features (filter identity features)
+        geo-edn (assoc {:type "FeatureCollection"} :features features)]
     (when @current-layer-id
       (.removeLayer @sf-map @current-layer-id))
-    (add-layer @sf-map film-name geo-edn)))
+    (add-layer @sf-map film-name geo-edn)
+    (fly-to (first features))))
 

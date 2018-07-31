@@ -53,19 +53,20 @@
     (assoc db :geo-locations []
               :loading-locations? false)))                      ;todo: handle failure
 
-(defn locations-for-film [db]
+(defn- locations-for-film [db]
   (filter #(= (:selected-film db) (:title %)) (:films db)))
 
 (reg-event-fx
   :get-geolocations
   (fn [{:keys [db]} _]
-    {:db         (assoc db :loading-locations? true)
-     :http-xhrio {:method          :get
-                  :uri             "/api/geo-locations"
-                  :params          {:desc (map #(str (:locations %) " San Francisco") (locations-for-film db))}
-                  :response-format (ajax/json-response-format {:keywords? true})
-                  :on-success      [:set-geo-locations]
-                  :on-failure      [:locations-load-failed]}}))
+    (let [desc (map :locations (locations-for-film db))]
+      {:db         (assoc db :loading-locations? true)
+       :http-xhrio {:method          :get
+                    :uri             "/api/geo-locations"
+                    :params          {:desc desc}
+                    :response-format (ajax/json-response-format {:keywords? true})
+                    :on-success      [:set-geo-locations]
+                    :on-failure      [:locations-load-failed]}})))
 
 (reg-event-fx
   :set-selected-film

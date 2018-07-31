@@ -6,16 +6,24 @@
             [clojure.string :as st]
             [clojure.tools.logging :as log]))
 
+(def san-francisco-coords [-122.4194 37.7749])
+
 (defn- safe-string [text]
   (st/replace text #"/" " "))
 
-(defn- get-locations [text]
-  (mb/get-locations mb/mapbox (safe-string text)))
+(defn- sort-by-distance [features]
+  (sort-by (juxt (comp first :center)
+                 (comp second :center))
+           features))
+
+(defn- get-closest-locations [text]
+  (let [locations (mb/get-locations mb/mapbox (safe-string text) san-francisco-coords)]
+    (first (sort-by-distance (:features locations)))))
 
 (defn- get-geo-locations [descriptions]
   (if (string? descriptions)
-    (get-locations descriptions)
-    (pmap get-locations descriptions)))
+    (get-closest-locations descriptions)
+    (pmap get-closest-locations descriptions)))
 
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
@@ -43,5 +51,5 @@
 
     (GET "/geo-locations" []
       :query-params [desc]
-      :summary      "Lat Long for a location description"
+      :summary      "Lat Long for a location description. Returns results with closest distance to San Fransisco"
       (ok (get-geo-locations desc)))))
