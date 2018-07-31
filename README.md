@@ -22,6 +22,14 @@ To compile and watch for changes
     
     lein auto sassc once
 
+## Config
+Add a `dev-config.edn` in the project root and include a mapbox api key:
+
+    {:dev true
+     :port 3000
+     :nrepl-port 7000
+     :mapbox-api-key "changeme"}
+
 ## Running
 To start a web server for the application from the command line, run:
 
